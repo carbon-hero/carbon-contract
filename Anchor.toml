@@ -1,14 +1,14 @@
 [features]
 seeds = false
 skip-lint = false
-[programs.localnet]
+[programs.devnet]
 carbon_contract = "2sH2Q2kcFvWpxjXqv78THttyfVKS25eNFvuD3vaj6BiN"
 
 [registry]
 url = "https://api.apr.dev"
 
 [provider]
-cluster = "Localnet"
+cluster = "devnet"
 wallet = "/Users/le/.config/solana/id.json"
 
 [scripts]

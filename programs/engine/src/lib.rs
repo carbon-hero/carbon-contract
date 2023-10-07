@@ -7,7 +7,7 @@ use anchor_spl::{
 declare_id!("2sH2Q2kcFvWpxjXqv78THttyfVKS25eNFvuD3vaj6BiN");
 
 #[program]
-pub mod carbon_contract {
+pub mod carbon_engine {
 	use super::*;
 
 	pub fn mint_token(ctx: Context<MintToken>) -> Result<()> {

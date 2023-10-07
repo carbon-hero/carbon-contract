@@ -1,12 +1,12 @@
 [package]
-name = "carbon-contract"
+name = "carbon-engine"
 version = "0.1.0"
 description = "Created with Anchor"
 edition = "2021"
 
 [lib]
 crate-type = ["cdylib", "lib"]
-name = "carbon_contract"
+name = "carbon_engine"
 
 [features]
 no-entrypoint = []
