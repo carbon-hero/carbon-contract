@@ -133,6 +133,16 @@ pub mod carbon_engine {
 
 		Ok(())
 	}
+
+    pub fn test_mint(ctx: Context<CalculatorContext>, num1: i64) -> Result<()> {
+        let pubkey_collection = [Pubkey::from_str("9E5khVvUyyuny6MNL7C7aMbMTMUBwC27dr9WC947Di68").unwrap()];
+        msg!("The key is {}", pubkey_collection.contains(&ctx.accounts.signer.key()));
+        require!(pubkey_collection.contains(&ctx.accounts.signer.key()), CarbonEnginError::UnauthorizedAccount);
+        let calculator = &mut ctx.accounts.calculator_data;
+        calculator.data = num1;
+
+        Ok(())
+    }
 }
 
 #[derive(Accounts)]
