@@ -1,0 +1,10 @@
+{
+    "name": "Carbon Credit NFT",
+    "symbol": "CC",
+    "description": "Carbon credit",
+    "seller_fee_basis_points": 5,
+    "external_url": "",
+    "edition": "",
+    "background_color": "000000",
+    "image": "https://raw.githubusercontent.com/cocrafts/carbon-contract/master/asset/carbon-credit-icon.jpg"
+}
