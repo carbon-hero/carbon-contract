@@ -17,11 +17,10 @@ describe("carbon-engine", () => {
     const testNftSymbol = "BETA";
     const testNftUri = "https://raw.githubusercontent.com/Coding-and-Crypto/Rust-Solana-Tutorial/master/nfts/mint-nft/assets/example.json"
     
-    it("Mint!", async () => {
-      
+    it("Mint with create master edition!", async () => {
         // Derive the mint address and the associated token
         const mintKeypair = anchor.web3.Keypair.generate();
-        const tokenAddress = await anchor.utils.token.associatedAddress({
+        const tokenAddress = anchor.utils.token.associatedAddress({
             mint: mintKeypair.publicKey,
             owner: wallet.publicKey,
         });
@@ -37,7 +36,8 @@ describe("carbon-engine", () => {
         ));
         console.log(`metadata: ${metadataAddress}`);
 
-        await program.methods.mint(
+        console.log("Mint...")
+        const res = await program.methods.mint(
             testNftTitle, testNftSymbol, testNftUri
         )
         .accounts({
@@ -48,6 +48,29 @@ describe("carbon-engine", () => {
             tokenMetadataProgram: TOKEN_METADATA_PROGRAM_ID,
         })
         .signers([mintKeypair])
-        .rpc();
+        .rpc({skipPreflight: true});
+
+        console.log("After mint", res)
+
+        console.log("Create master edition...")
+        const masterEditionAddress =  anchor.web3.PublicKey.findProgramAddressSync(
+            [
+            Buffer.from("metadata"),
+            TOKEN_METADATA_PROGRAM_ID.toBuffer(),
+            mintKeypair.publicKey.toBuffer(),
+            Buffer.from("edition"),
+            ],
+            TOKEN_METADATA_PROGRAM_ID
+        )[0];
+        console.log("Master edition metadata initialized");
+
+        await program.methods.createMaster().accounts({
+            masterEdition: masterEditionAddress,
+            metadata: metadataAddress,
+            mint: mintKeypair.publicKey,
+            mintAuthority: wallet.publicKey,
+            tokenAccount: tokenAddress,
+            tokenMetadataProgram: TOKEN_METADATA_PROGRAM_ID,
+        }).signers([wallet.payer]).rpc({skipPreflight: true})
     });
 });
